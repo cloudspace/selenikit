@@ -16,7 +16,7 @@ And then execute:
 
 You will need to install the following packages
 
-    java-common firefox xvfb xorg xserver-xorg xinetd vnc4server libvncserver0 libicu48
+    $ sudo apt-get install java-common firefox xvfb xorg xserver-xorg xinetd vnc4server libvncserver0 libicu48
     
 Make sure you start vnc4server and set a password for it. Remember this password for VNC connections later to see what your tests are doing! Be sure to kill the VNC process using the vnc4server command:
 
