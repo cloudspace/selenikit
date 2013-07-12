@@ -39,6 +39,10 @@ Inside the Rspec.configure block add:
         
 ## Usage
 
+Make sure you have a test server running on port 80
+
+    $ sudo rails s -p 80 -e test
+
 To run your tests with Selenium because you'd like a GUI
 
     rake spec:selenium
