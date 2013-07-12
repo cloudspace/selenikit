@@ -1,0 +1,1 @@
+require 'selenikit/rspec/configure'
