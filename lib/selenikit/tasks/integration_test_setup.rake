@@ -24,7 +24,7 @@ namespace :spec do
     Rake::Task["vnc:firefox"].invoke
     
     # Run all features or one file
-    t.pattern = ENV["FILE"].blank? ? "spec/features/*.rb" : ENV["FILE"]
+    t.pattern = ENV["FILE"].blank? ? "spec/features/*.rb, spec/features/**/.rb" : ENV["FILE"]
     
     # Make rspec pretty
     t.rspec_opts = ['-f documentation', '--color']

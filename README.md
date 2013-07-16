@@ -36,6 +36,8 @@ At the top with all of your requires add:
 Inside the Rspec.configure block add:
     
     Selenikit::Rspec::Configure.set_driver
+    
+All of your integration tests should be inside of spec/features:
         
 ## Usage
 
