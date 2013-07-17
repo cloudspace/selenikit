@@ -3,12 +3,9 @@ module Selenikit
     module Helpers
       RSpec.configure do |config|
         config.before(:each) do
-          if self.example.metadata[:selenium].present? && ENV["SELENIUM"] != "true"
-            Capybara.current_driver = :my_firefox_driver
-            ENV["DISPLAY"] = ":99"
-            
-          else
-            ENV["DISPLAY"] = ":98"
+          # If the test is tagged as selenium or if we're in the selenium rake task, set the driver to selenium
+          if self.example.metadata[:selenium].present? || ENV["SELENIUM"] == "true"
+            Capybara.current_driver = :selenium_firefox_driver
           end
         end
       end

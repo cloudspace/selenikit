@@ -44,14 +44,6 @@ namespace :spec do
     Rake::Task["xvfb:start"].reenable
     Rake::Task["xvfb:start"].invoke
     
-    # Start the vnc session
-    Rake::Task["vnc:start"].reenable
-    Rake::Task["vnc:start"].invoke
-    
-    # Start firefox
-    Rake::Task["vnc:firefox"].reenable
-    Rake::Task["vnc:firefox"].invoke
-    
     # Run all features or one file
     t.pattern = ENV["FILE"].blank? ? ["spec/features/*.rb","spec/features/**/*.rb"] : ENV["FILE"]
     
@@ -72,9 +64,9 @@ namespace :xvfb do
   desc "Xvfb setup"
   task :start do
     # This is what links the server to the test
-    ENV["DISPLAY"] = ":98"
-    # System call to start the server on display :98
-    %x{Xvfb :98 2>/dev/null >/dev/null &}
+    ENV["DISPLAY"] = ":99"
+    # System call to start the server on display :99
+    %x{Xvfb :99 2>/dev/null >/dev/null &}
   end
   
 end
