@@ -56,6 +56,6 @@ To run your tests with Capybara-Webkit because you want them to be fast
 
     rake spec:webkit
     
-If you have a test you always want to run with Selenium because Webkit can't simulate it, add the tag :selenium => true
+If you have a test you always want to run with Selenium because Webkit can't simulate it, add the tag :selenium => true.  Tests with the selenium tag will always be run with the selenium driver, even in rake spec:webkit
 
     it "should show errors if you fail to fill out the form", :selenium => true do
