@@ -55,3 +55,7 @@ To run your tests with Selenium because you'd like a GUI
 To run your tests with Capybara-Webkit because you want them to be fast
 
     rake spec:webkit
+    
+If you have a test you always want to run with Selenium because Webkit can't simulate it, add the tag :selenium => true
+
+    it "should show errors if you fail to fill out the form", :selenium => true do
