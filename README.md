@@ -39,7 +39,8 @@ Inside the Rspec.configure block add:
     
 All of your integration tests should be inside of spec/features:
 
-  Selenikit will recognise any .rb files inside of spec/features as well as any .rb files in any subdirectory of spec/features
+    Selenikit will recognise any .rb files inside of spec/features 
+    as well as any .rb files in any subdirectory of spec/features
         
 ## Usage
 
