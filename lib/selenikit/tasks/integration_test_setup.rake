@@ -1,8 +1,29 @@
 require 'rspec/core/rake_task'
 
 namespace :spec do
+  def os
+    @os ||= (
+      host_os = RbConfig::CONFIG['host_os']
+      case host_os
+      when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
+        :windows
+      when /darwin|mac os/
+        :macosx
+      when /linux/
+        :linux
+      when /solaris|bsd/
+        :unix
+      else
+        raise Error::WebDriverError, "unknown os: #{host_os.inspect}"
+      end
+    )
+  end
   
   RSpec::Core::RakeTask.new(:selenium) do |t|
+    
+    # Determine the OS
+    os
+
     ENV["RAILS_ENV"] = "test"
     
     # This will be used in spec_helper to determine 
@@ -10,18 +31,22 @@ namespace :spec do
     ENV["SELENIUM"] = "true"
     
     # Kill any previously running sessions
-    Rake::Task["vnc:kill"].reenable
-    Rake::Task["vnc:kill"].invoke
     Rake::Task["xvfb:kill"].reenable
     Rake::Task["xvfb:kill"].invoke
     
-    # Start the vnc session
-    Rake::Task["vnc:start"].reenable
-    Rake::Task["vnc:start"].invoke
+    if @os == :linux
+      # Kill any previously running sessions
+      Rake::Task["vnc:kill"].reenable
+      Rake::Task["vnc:kill"].invoke
     
-    # Start firefox
-    Rake::Task["vnc:firefox"].reenable
-    Rake::Task["vnc:firefox"].invoke
+      # Start the vnc session
+      Rake::Task["vnc:start"].reenable
+      Rake::Task["vnc:start"].invoke
+    
+      # Start firefox
+      Rake::Task["vnc:firefox"].reenable
+      Rake::Task["vnc:firefox"].invoke
+    end
     
     # Run all features or one file
     t.pattern = ENV["FILE"].blank? ? ["spec/features/*.rb","spec/features/**/*.rb"] : ENV["FILE"]
@@ -31,11 +56,18 @@ namespace :spec do
   end
   
   RSpec::Core::RakeTask.new(:webkit) do |t|
+    
+    # Determine the OS
+    os
+    
     ENV["RAILS_ENV"] = "test"
     
-    # Kill any previously running sessions
-    Rake::Task["vnc:kill"].reenable
-    Rake::Task["vnc:kill"].invoke
+    if @os == :linux
+      # Kill any previously running sessions
+      Rake::Task["vnc:kill"].reenable
+      Rake::Task["vnc:kill"].invoke
+    end
+    
     Rake::Task["xvfb:kill"].reenable
     Rake::Task["xvfb:kill"].invoke
 
@@ -43,6 +75,7 @@ namespace :spec do
     # We could use headless for this, but I know how it works so why not
     Rake::Task["xvfb:start"].reenable
     Rake::Task["xvfb:start"].invoke
+    
     
     # Run all features or one file
     t.pattern = ENV["FILE"].blank? ? ["spec/features/*.rb","spec/features/**/*.rb"] : ENV["FILE"]
