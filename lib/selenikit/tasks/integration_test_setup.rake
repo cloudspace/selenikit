@@ -1,5 +1,11 @@
 require 'rspec/core/rake_task'
 
+Rake::Task['spec'].clear
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = Dir['spec/*/**/*_spec.rb'].reject{ |f| f['/features'] }
+end
+
 namespace :spec do
   def os
     @os ||= (
